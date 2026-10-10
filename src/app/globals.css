@@ -1,0 +1,1139 @@
+@import 'tailwindcss';
+
+:root {
+  /* ===== YOLYOLAKAY BREND TIZIMI (premium light) ===== */
+  /* Asosiy premium palitra */
+  --wine-ash: #32292f; /* to'q fon, sarlavhalar, futer */
+  --turquoise: #99e1d9; /* aksent, muvaffaqiyat, faol holat */
+  --turquoise-light: #c4efe9; /* yengil fon, hover */
+  /* 🔑 FERUZA MATN UCHUN EMAS (2026-09-04). #99e1d9 oq qog'ozda 1.49:1 —
+     ya'ni tarif kartasidagi «1 safar ≈ 2 500 so'm» deyarli ko'rinmasdi.
+     Feruza — ZAMIN va BELGI rangi; YOZUV yorug' sirtda `turquoise-ink`
+     bilan yoziladi (5.4:1). To'q sirtda esa oddiy `turquoise` to'g'ri
+     qoladi — shuning uchun bu token TEMAGA emas, SIRTGA qarab
+     tanlanadi (`isPremium ? turquoise : turquoise-ink`). */
+  --turquoise-ink: #27766c;
+
+  /* Brend CTA — pushti.
+     🔴 2026-09-04 da TO'QLASHTIRILDI (egasi tanladi). Eski #e91e8c
+     o'lchovda WCAG AA dan past edi: zaminida oq yozuv 4.18:1, pushti
+     havola oq qog'ozda 3.85:1 (kerak — 4.5:1). Ya'ni eng ko'p
+     ishlatiladigan ikkala holat ham chegaradan pastda turardi. Yangi
+     rang o'ylab topilmadi — u palitradagi eski HOVER rangi. */
+  --brand-pink: #c71578; /* barcha asosiy tugmalar, muhim CTA, logo — 5.52:1 */
+  --brand-pink-light: #fde8f3;
+  --brand-pink-hover: #a91068; /* pushtidan olingan to'qroq hover — 7.09:1 */
+
+  /* Neytral */
+  --bg-white: #ffffff;
+  --bg-soft: #f7f5f6; /* wine-ash dan olingan juda och variant */
+  --text-primary: #32292f; /* wine-ash matn uchun ham */
+  --text-secondary: #6b6570;
+  --border: #e8e4e6;
+
+  /* Status ranglar */
+  --success: #99e1d9;
+  /* «TEKSHIRILDI» — yashil. `--success` dan ATAYIN boshqa: u brend
+     feruzasiga bog'langan («bor» degani), bu esa «tekshirildi va joyida»
+     degani. Ilovadagi `BrandColors.success` bilan AYNAN bir xil qiymat —
+     OTP tasdiqlanishi ikkala mijozda bir xil ko'rinsin.
+     ⚠️ Faqat chegara/ikonka uchun: oq zaminda 3.05:1 (mayda yozuvga
+     yetmaydi). */
+  --verified: #1fa971;
+  --warning: #f5a623;
+  /* Qizil ham AA ga tortildi (2026-09-04): eski #e63946 oq qog'ozda
+     4.17:1, o'zining ochiq tusidagi zaminida esa 3.63:1 edi — «Chiqish»
+     tugmasi aynan shunday yozilgan. Bitta rang ikkala rolni ham
+     bajaradi: zamin (ustida oq yozuv 5.84:1) va yorug' temadagi yozuv. */
+  --error: #c1272d;
+  --error-ink: var(--error);
+
+  /* «MEN SHU YERDAMAN» — xaritadagi ko'k nuqta (18.09.2026).
+     🔑 Palitradan ATAYIN tashqarida: xaritada `--verified` haydovchi,
+     `--accent` manzil, `--turquoise` oraliq to'xtash. Foydalanuvchining
+     O'ZI shu uchtasining biriga bo'yalsa, xaritadagi to'rtta nuqtaning
+     ikkitasi bir xil rangda bo'lardi. Ko'k — har uchala temada ham
+     bo'sh turgan yagona ton va butun dunyo xaritalarida «bu sizsiz»
+     degani. Faqat XARITA UCHUN: sahifa yozuvida ishlatilmaydi. */
+  --my-location: #2f6bff;
+
+  /* ===== App ichki alias'lari (yangi palitraga bog'langan — hardcode YO'Q) ===== */
+  --bg: var(--bg-soft);
+  --surface: var(--bg-white);
+  --text-color: var(--text-primary);
+  --text-muted: var(--text-secondary);
+  --accent: var(--brand-pink);
+  --accent-hover: var(--brand-pink-hover);
+  /* 🔑 AKSENTNING IKKI ROLI BOR va ular hamma temada bir xil rang
+     bo'la olmaydi:
+       --accent      — ZAMIN (ustida oq yozuv turadi);
+       --accent-ink  — YOZUVNING O'ZI, sahifa zaminida.
+     Yorug' temada ikkalasi bir xil. To'q temada esa AJRALADI: to'q
+     pushti to'q zaminda 3.17:1 — o'qilmaydi. */
+  --accent-ink: var(--brand-pink);
+  /* Doim TO'Q sirtlar uchun (futer, obuna hujjati, peshtoq) — ular
+     temaga bo'ysunmaydi, ya'ni yorug' temada ham to'q qoladi va
+     `--accent-ink` ularga yaramaydi (3.17:1). Bu qiymat TEMADAN
+     MUSTAQIL: qayerda ishlatilsa ham zamin to'q ekani ma'lum. */
+  --accent-on-dark: #ff6bb8;
+  --border-color: var(--border);
+
+  /* Semantik tema tokenlari (bg-background / text-foreground) — tema-sezgir,
+     .dark ostida almashadi. Sarlavhalar SHU foreground'ni ishlatsin (text-wine-ash EMAS). */
+  --background: var(--bg-white);
+  --foreground: var(--text-primary);
+
+  --shadow-color: rgba(199, 21, 120, 0.1);
+  --glass-bg: rgba(255, 255, 255, 0.7);
+  --glass-border: rgba(255, 255, 255, 0.6);
+}
+
+.dark {
+  /* ТЕМА DARK — wine-ash asosida, brend aksentlari saqlanadi */
+  --bg: #1e181c; /* wine-ash to'qroq varianti */
+  /* MUHIM: bg-soft ham temaga bo'ysunishi SHART. Ilgari u :root'dagi oq-kulrang (#f7f5f6)
+     bo'lib qolardi — tungi temada landing bo'limlari (bg-bg-soft) oq fon + oq matn bo'lib
+     UMUMAN o'qilmasdi (sahifa "ishlamayotgandek" ko'rinardi). */
+  --bg-soft: #241e22;
+  --surface: #2a2328;
+  --text-color: #f3f0f2;
+  --text-muted: #a9a2a8;
+  /* Semantik tokenlar dark uchun — sarlavha/matn yorug', fon to'q bo'ladi */
+  --background: #1e181c;
+  --foreground: #f3f0f2;
+  --accent: var(--brand-pink); /* zamin: ustidagi oq yozuv 5.52:1 */
+  --accent-hover: #d81a82; /* bu ham ZAMIN — oq yozuv bilan o'lchandi (4.78:1) */
+  --accent-ink: #ff6bb8; /* YOZUV: to'q zaminda 6.69:1, pushti chipda 5.57:1 */
+  /* To'q temada yorug' feruza allaqachon o'qiladi — «ink» o'zi bo'ladi. */
+  --turquoise-ink: var(--turquoise);
+  --border-color: #3a3238;
+  --warning: #f5a623;
+  --success: var(--turquoise);
+  /* To'q zaminda #1fa971 xiralashadi — ochroq yashil olinadi. */
+  --verified: #3ddc97;
+  --error: #c1272d; /* zamin: oq yozuv 5.84:1 */
+  --error-ink: #ff6b74; /* YOZUV to'q zaminda: 6.33:1 */
+  /* Tungi plitka to'q — ko'k ochroq bo'lmasa nuqta xaritaga singib ketadi. */
+  --my-location: #5c8cff;
+
+  --shadow-color: rgba(199, 21, 120, 0.22);
+  --glass-bg: rgba(42, 35, 40, 0.6);
+  --glass-border: rgba(255, 255, 255, 0.06);
+}
+
+/* ===== NEON USLUB (egasi, 2026-08-20: BREND rangimizning neoni —
+   pushti (2026-09-04 dan #C71578) + turkuaz #99E1D9 neon versiyasi; begona binafsha OLIB
+   TASHLANDI) =====
+   Ilova bilan bir xil palitra. Uslub `html.neon` klassi bilan yoqiladi
+   (yorug'lik `.dark` dan MUSTAQIL) — 4 kombinatsiya: classic-light/dark,
+   neon-light/dark. Faqat RANG + porlash o'zgaradi, tuzilma emas.
+   Spetsifikatsiya: `html.neon.dark` > `html.neon` > `.dark` > `:root`. */
+
+/* Neon LIGHT — oq-turkuaz fon, brend neon aksentlari (pushti+aqua). */
+html.neon {
+  /* Neon pushti ham AA ga tortildi: #ff2ba0 zaminida oq yozuv 3.44:1
+     edi. NEONLIK rangning to'qligidan emas, YOLQINDAN (box-shadow)
+     keladi — porlash rangi hamon issiq #ff2ba0, zamin bir pog'ona to'q. */
+  --brand-pink: #d6117f;
+  --brand-pink-light: #ffe4f4;
+  --brand-pink-hover: #b8106f;
+  --turquoise: #16e7ce;
+  --turquoise-light: #d2fbf5;
+  --turquoise-ink: #0d7c6e; /* neon aqua oq qog'ozda 1.57:1 — yozuv uchun to'qrog'i */
+  --wine-ash: #06100f;
+  --bg-white: #ffffff;
+  --bg-soft: #f3fbfa;
+  --text-primary: #06100f;
+  --text-secondary: #5f7a76;
+  --border: #d8efe9;
+  --accent: #d6117f; /* oq yozuv 4.95:1 */
+  --accent-hover: #b8106f;
+  --accent-ink: #d6117f; /* yorug' neon qog'ozda 4.71:1 */
+  --border-color: #d8efe9;
+  --success: #16e7ce;
+  --verified: #0f9d63; /* neon qog'oz och-feruza — yashil to'qroq bo'lsin */
+  /* Porlash — neon aksent rangida (classic'да pushti edi). */
+  --shadow-color: rgba(255, 43, 160, 0.35);
+}
+
+/* Neon DARK — qop-qora-turkuaz fon, kuchli porlash (brend pushti). */
+html.neon.dark {
+  --brand-pink: #d6117f;
+  --brand-pink-hover: #e01587;
+  --turquoise: #16e7ce;
+  --turquoise-ink: #16e7ce;
+  --wine-ash: #06100f;
+  --bg: #050b0c;
+  --bg-soft: #0a1414;
+  --surface: #0e1618;
+  --text-color: #eafbf7;
+  --text-muted: #7f9a95;
+  --background: #050b0c;
+  --foreground: #eafbf7;
+  --accent: #d6117f; /* zamin: oq yozuv 4.95:1 */
+  --accent-hover: #e01587;
+  --accent-ink: #ff2ba0; /* YOZUV: qora-turkuaz zaminda 5.76:1 — neon aynan shu yerda ko'rinadi */
+  --border-color: #1e2e2c;
+  --success: #16e7ce;
+  --verified: #3ddc97;
+  /* Neon tunda oddiy ko'k xira ko'rinadi — bir pog'ona yorug'i. */
+  --my-location: #6aa8ff;
+  --shadow-color: rgba(255, 43, 160, 0.5);
+  --glass-bg: rgba(14, 22, 24, 0.6);
+  --glass-border: rgba(22, 231, 206, 0.14);
+}
+
+/* ===== PUSHTI YOZUV TO'Q TEMADA =====
+   `--accent` — ZAMIN rangi: ustida oq yozuv turadi, shuning uchun u
+   to'q bo'lishi kerak. Ayni o'sha rang YOZUV sifatida to'q zaminga
+   tushsa 3.17:1 beradi — o'qilmaydi. Yozuv uchun `--accent-ink` bor
+   (to'q temada ochroq pushti).
+
+   ⚠️ NEGA HAR SAHIFADA EMAS, SHU YERDA: `text-accent` sayt bo'ylab 212
+   joyda ishlatiladi va ularning ko'pi ikonka. Bitta qoida ikkalasini
+   ham to'g'rilaydi va ertaga qo'shiladigan yangi joy ham o'z-o'zidan
+   to'g'ri chiqadi. Aynan shu naqsh quyidagi neon yolqinida ham
+   ishlatilgan. */
+.dark .text-accent,
+.dark .text-brand-pink {
+  color: var(--accent-ink);
+}
+/* Qizil YOZUV ham xuddi shunday: to'q zaminda to'q qizil o'qilmaydi. */
+.dark .text-error {
+  color: var(--error-ink);
+}
+.dark .hover\:text-accent:hover {
+  color: var(--accent-ink);
+}
+
+/* ===== NEON PORLASHI (glow) =====
+   Classic soyaga tayanadi; neon esa rangли YOLQIN beradi. Statik
+   (animatsiya YO'Q). Faqat neon uslubда qo'llanadi. */
+
+/* Asosiy tugmalar (bg-accent) ostidan neon yolqin. */
+html.neon .bg-accent {
+  box-shadow: 0 0 20px -2px var(--shadow-color);
+}
+/* Aksent chegara/matn ham yengil porlaydi (neon "chiziq" hissi). */
+html.neon .border-accent {
+  box-shadow: 0 0 14px -4px var(--shadow-color);
+}
+
+@theme {
+  /* ===== Brend ranglar (utilities: bg-wine-ash, text-turquoise, bg-brand-pink) ===== */
+  --color-wine-ash: var(--wine-ash);
+  --color-turquoise: var(--turquoise);
+  --color-turquoise-light: var(--turquoise-light);
+  --color-turquoise-ink: var(--turquoise-ink);
+  --color-brand-pink: var(--brand-pink);
+  --color-brand-pink-light: var(--brand-pink-light);
+  --color-bg-soft: var(--bg-soft);
+
+  /* ===== Alias tokenlar (27 fayl ishlatadi — endi to'g'ri aniqlangan) ===== */
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-primary: var(--brand-pink);
+  --color-primary-foreground: #ffffff;
+
+  /* ===== Mavjud app tokenlari ===== */
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-text: var(--text-color);
+  --color-text-muted: var(--text-muted);
+  --color-accent: var(--accent);
+  --color-accent-hover: var(--accent-hover);
+  --color-accent-ink: var(--accent-ink);
+  --color-accent-on-dark: var(--accent-on-dark);
+  --color-border: var(--border-color);
+  --color-warning: var(--warning);
+  --color-error-ink: var(--error-ink);
+  --color-success: var(--success);
+  --color-verified: var(--verified);
+  --color-error: var(--error);
+
+  /* ===== Shriftlar ===== */
+  /* Serif — FAQAT katta sarlavha/hero (font-display). Body — Onest. */
+  /* Skript bo'yicha zaxira: lotin — Fraunces, kirill — Playfair
+     (Fraunces kirillni chizmaydi). Izohi `[locale]/layout.tsx` da. */
+  --font-display: var(--font-fraunces), var(--font-playfair), Georgia, 'Times New Roman', serif;
+  --font-sans:
+    var(--font-geist-sans), -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+
+  /* Строгая сетка */
+  --spacing-1: 4px;
+  --spacing-2: 8px;
+  --spacing-3: 12px;
+  --spacing-4: 16px;
+  --spacing-5: 20px;
+  --spacing-6: 24px;
+  --spacing-8: 32px;
+  --spacing-10: 40px;
+  --spacing-12: 48px;
+  --spacing-16: 64px;
+
+  /* Premium Squircle Радиусы */
+  --radius-sm: 10px;
+  --radius-md: 14px;
+  --radius-lg: 18px;
+  --radius-xl: 24px;
+  --radius-2xl: 32px;
+
+  /* Premium Тени */
+  --shadow-sm: 0 2px 8px -2px var(--shadow-color), 0 1px 3px -1px rgba(0, 0, 0, 0.04);
+  --shadow-md: 0 8px 24px -4px var(--shadow-color), 0 4px 12px -2px rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 16px 40px -8px var(--shadow-color), 0 8px 20px -4px rgba(0, 0, 0, 0.08);
+  --shadow-glow: 0 0 24px var(--shadow-color);
+}
+
+/* Применение базовых настроек */
+html,
+body {
+  height: 100%;
+  /* MUHIM: `overflow-x: hidden` EMAS. hidden bo'lsa CSS spetsifikatsiyasi bo'yicha
+     overflow-y ham `visible`dan `auto`ga aylanadi va <body> alohida scroll konteyneriga
+     aylanib qoladi — bunda sahifaning oxiri (futer) "kesilgan"dek ko'rinishi mumkin.
+     `clip` gorizontal toshishni bir xil to'sadi, lekin scroll konteyner yaratmaydi. */
+  overflow-x: clip;
+  background-color: var(--bg);
+  color: var(--text-color);
+  /* 🔴 QOTIRILGAN 'Inter' EMAS, TOKEN (2026-08-31).
+     Bu yerda `'Inter'` yozilgan edi, lekin loyihada Inter UMUMAN
+     yuklanmaydi — ya'ni butun sayt tizim shriftida chizilardi va
+     `--font-sans` (next/font) hech qachon ishlatilmasdi. Uch tilli
+     saytda bu ayniqsa yomon: ruscha matn har kompyuterda boshqacha
+     ko'rinardi. */
+  font-family: var(--font-sans);
+  transition:
+    background-color 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+    color 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  padding-bottom: var(--safe-bottom);
+}
+
+/* ===== NOTCH / STATUS BAR (old kamera) — XAVFSIZ ZONA =====
+   viewport-fit=cover tufayli kontent ekranning eng chetigacha (status bar va old kamera
+   "tishi" ostigacha) cho'ziladi. env(safe-area-inset-*) shu joyni qoplaydi, LEKIN Android'da
+   o'rnatilgan PWA'da bu qiymat ko'pincha 0 qaytadi — natijada tepadagi yozuvlar kameraga
+   yopishib qolardi. Shuning uchun standalone (ekranga o'rnatilgan ilova) rejimida eng kamida
+   status bar balandligi (28px) ajratiladi. Oddiy brauzer tabida qo'shimcha joy olinmaydi. */
+:root {
+  --safe-top: env(safe-area-inset-top, 0px);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+}
+@media (display-mode: standalone), (display-mode: fullscreen), (display-mode: minimal-ui) {
+  /* Capacitor (html.in-app) bundan mustasno: u yerda status bar joyini native qatlam
+     ajratadi (overlaysWebView: false) — ikki marta bo'shliq kerak emas. */
+  html:not(.in-app) {
+    --safe-top: max(env(safe-area-inset-top, 0px), 28px);
+    /* Pastda ham xuddi shunday: sahifaning oxiri (futer) pastki tizim paneli —
+       gesture chizig'i yoki 3 tugmali navigatsiya — ostida qolib kesilmasin.
+       Android PWA'da env(safe-area-inset-bottom) ham ko'pincha 0 qaytaradi, shuning
+       uchun eng kamida 24px ajratamiz. */
+    --safe-bottom: max(env(safe-area-inset-bottom, 0px), 24px);
+  }
+}
+
+/* Yordamchi klasslar (Tailwind'da bunday utilitalar yo'q — o'zimiz beramiz). */
+.pt-safe {
+  padding-top: var(--safe-top);
+}
+.pb-safe {
+  padding-bottom: var(--safe-bottom);
+}
+.mt-safe {
+  margin-top: var(--safe-top);
+}
+/* Yopishqoq (sticky) sarlavha: tepasi status bar bilan qoplanmasin. */
+.header-safe {
+  padding-top: var(--safe-top);
+}
+
+/* Pastdan chiqadigan varaq (`BottomSheet`) ichki pastki bo'shlig'i.
+   Oddiy `pb-8` (32px) YETMAYDI: Android 15+ da tizim "edge-to-edge" ni
+   majburiy qildi va imo-ishora paneli kontent ustiga tushadi — varaqning
+   eng pastki tugmasi shu panel ostida qolardi. Qat'iy 32px o'rniga
+   bo'shliq tizim insetiga QO'SHILADI.
+   Mobil ilovada shu muammo `useSafeArea: true` bilan yopilgan
+   (`test/edge_to_edge_test.dart` qo'riqlaydi). */
+.pb-sheet {
+  padding-bottom: calc(2rem + var(--safe-bottom));
+}
+
+/* ===== NATIVE-FEEL (WebView ilova + web) ===== */
+/* Bosishда kulrang/ko'k yaltirash yo'q (native ilovalarда bunday yaltirash bo'lmaydi). */
+html {
+  -webkit-tap-highlight-color: transparent;
+  /* Aylantirish paneli uchun joy DOIM band turadi.
+     Usiz: sahifadan sahifaga o'tishda o'ram qayta yaratiladi (`template.tsx`
+     dagi `key={pathname}`), kontent bir lahza bo'shab sahifa balandligi
+     tushadi, panel yo'qoladi va butun sahifa 1-2 px chapga siljib, kontent
+     kelgach yana o'ngga qaytadi. `stable` bilan panel joyi hech qachon
+     bo'shamaydi va siljish umuman bo'lmaydi. */
+  scrollbar-gutter: stable;
+}
+/* Scroll oxiriда "rubber-band" sakrash / pull-to-refresh yaltirashi yo'q — brauzer hissi ketadi. */
+body {
+  overscroll-behavior: none;
+}
+
+/* FAQAT ilova ichida (Capacitor -> html.in-app): haqiqiy native ilovadek —
+   matn tanlash, uzun-bosish menyusi va double-tap zoom YO'Q. */
+html.in-app,
+html.in-app body {
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-touch-callout: none;
+}
+html.in-app {
+  touch-action: manipulation; /* double-tap zoom yo'q, tap kechikishi kamayadi */
+}
+/* Matn kiritish maydonlarida tanlash SAQLANADI (aks holda yozib/tahrirlab bo'lmaydi). */
+html.in-app input,
+html.in-app textarea,
+html.in-app [contenteditable='true'] {
+  -webkit-user-select: text;
+  user-select: text;
+}
+
+/* Touch target minimum — FAQAT matn kiritish maydonlariga (input/select/textarea).
+   Ilgari qoida button/a'ga ham, min-width bilan birga tegib, ixcham boshqaruvlarni buzardi:
+   Counter +/− tugmalari (40px -> 48px), RU/UZ til toggle'i yo'g'onlashardi, inline matn-havolalar
+   ortiqcha balandlik olardi. Tugmalar/ikonkalar endi O'Z stillari bilan o'lchamlanadi
+   (Button min-h-[52px], ikonka tugmalar h-9..h-12). Checkbox/radio (Switch sr-only) chiqarildi. */
+input:not([type='checkbox']):not([type='radio']),
+select,
+textarea {
+  min-height: 44px;
+}
+
+/* ===== HARAKATNI KAMAYTIRISH — GLOBAL (spec 5-bo'lim, MAJBURIY) =====
+   Foydalanuvchi tizimida "reduce motion" yoqilsa — BARCHA animatsiya deyarli
+   to'xtaydi. Bu butun ilovaga (nafaqat landing) qo'llanadi. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ===== HARAKAT TOKENLARI =====
+   Ilgari har joyda o'z qiymati turardi (`duration-200`, `300`, `500`, `150` va
+   turli `ease-*`). Har biri alohida to'g'ri, lekin birgalikda RITM bermasdi —
+   sifat hissi aynan izchillikdan keladi. Endi uchta ma'noli davomiylik va
+   ikkita egri chiziq bor, hamma joy shulardan oladi.
+
+   `fast`  — rang/chegara o'zgarishi, hover. Ko'z zo'rg'a ilg'aydi.
+   `base`  — asosiy o'lchov: kirish, ochilish, kartalar.
+   `slow`  — katta yuzalar: modal, pastki oyna, sahifa.
+
+   `ease-out`    — kirish uchun (tez boshlanib, yumshoq to'xtaydi).
+   `ease-spring` — jismoniy his kerak bo'lganda (modal, sanagich): oxirida
+                   sal oshib qaytadi, "ushlanadigan" bo'lib tuyuladi. */
+:root {
+  --dur-fast: 150ms;
+  --dur-base: 250ms;
+  --dur-slow: 400ms;
+  --ease-out: cubic-bezier(0.22, 0.61, 0.36, 1);
+  --ease-spring: cubic-bezier(0.34, 1.32, 0.64, 1);
+}
+
+/* ===== HARAKAT PRIMITIVLARI (shared/ui/motion) =====
+   Nima uchun o'z kodimiz: reactbits.dev kabi to'plamlardagi kirish animatsiyalari
+   GSAP/framer-motion (rAF) ustida ishlaydi. rAF esa brauzer oynani "ko'rinmayapti"
+   deb hisoblasa (fon tab, WebView endi ochilayotganda, oyna ustiga boshqa oyna
+   tushganda) TO'XTAYDI — element `opacity: 0` da qotib qoladi va sahifa bo'sh
+   ko'rinadi. Bu bizda 2026-07-25 da haqiqatan sodir bo'lgan (landing).
+   Shu sababli hamma narsa CSS bilan: `animation-fill-mode: both` yakuniy holatni
+   rAF'siz kafolatlaydi, JS faqat "ko'rindi" signalini beradi.
+
+   QOIDA: faqat `opacity` + `transform`. `width`/`height`/`box-shadow`/`filter`
+   animatsiya qilinmaydi — ular har kadrda layout/paint talab qiladi va arzon
+   Android'da aynan shular "qotish" beradi. */
+
+/* Ro'yxat elementlari ketma-ket ochiladi (`AnimatedList` ekvivalenti).
+   Kechikish `--i` indeksidan hisoblanadi — JS har element uchun taymer qurmaydi.
+   Indeks komponentda CHEGARALANGAN (maks 8): 100 elementli ro'yxat 5 soniyalik
+   karvonga aylanib qolmasin. */
+.mo-stagger > *,
+/* Konteynerni o'zgartirmasdan, elementning O'ZIGA qo'yish uchun. Mavjud ro'yxatlarga
+   qo'shimcha o'ram <div> kiritish `space-y-*` oralig'ini buzardi. */
+.mo-stagger-item {
+  animation: mo-fade-up var(--dur-slow) var(--ease-out) both;
+  animation-delay: calc(var(--i, 0) * 0.05s + var(--mo-d, 0s));
+}
+
+/* So'zlar ketma-ket ochiladi (`SplitText` ekvivalenti). Harflar bo'yicha EMAS —
+   bitta sarlavha 40+ DOM tugunga bo'linib ketmasligi uchun. */
+.mo-split-word {
+  display: inline-block;
+  animation: mo-fade-up var(--dur-slow) var(--ease-out) both;
+  animation-delay: calc(var(--i, 0) * 0.045s + var(--mo-d, 0s));
+}
+
+/* ===== Suzani rozetkasi ochilishi (`brand/SuzaniBloom`) =====
+   Har barg o'z navbatida ochiladi, markazi eng oxirida "bosiladi".
+   Kechikish `--i` indeksidan hisoblanadi — JS taymer qurmaydi.
+   SVG ichida `transform-box: fill-box` SHART: usiz `transform-origin` SVG
+   koordinata boshiga (0,0) nisbatan olinadi va barglar burchakka uchib ketadi. */
+.sz-bloom .sz-petal {
+  transform-box: fill-box;
+  transform-origin: 50% 100%;
+  animation: sz-petal-in var(--dur-slow) var(--ease-spring) both;
+  animation-delay: calc(var(--i, 0) * 0.055s);
+}
+@keyframes sz-petal-in {
+  from {
+    opacity: 0;
+    scale: 0.2;
+  }
+  to {
+    opacity: 1;
+    scale: 1;
+  }
+}
+
+/* Markaz — barglar tugagach bosiladi (8 barg * 0.055s = 0.44s). */
+.sz-bloom .sz-core {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: sz-core-in var(--dur-base) var(--ease-spring) 0.44s both;
+}
+@keyframes sz-core-in {
+  from {
+    opacity: 0;
+    scale: 0;
+  }
+  to {
+    opacity: 1;
+    scale: 1;
+  }
+}
+
+/* Butun gul sekin aylanib joyiga o'tiradi — "ochildi" hissini yakunlaydi. */
+.sz-bloom svg {
+  animation: sz-turn 0.7s ease-out both;
+}
+@keyframes sz-turn {
+  from {
+    transform: rotate(-14deg) scale(0.9);
+  }
+  to {
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sz-bloom .sz-petal,
+  .sz-bloom .sz-core,
+  .sz-bloom svg {
+    animation-delay: 0s !important;
+  }
+}
+
+/* Brend gradientli matn — reactbits `GradientText` ning narxsiz o'rnini bosuvchi.
+   Asl komponent gradientni `useAnimationFrame` bilan surib turadi, ya'ni sahifa
+   ochiq turgan davomida to'xtovsiz rAF sikli. Ko'rinishning asosiy qismi esa
+   harakatdan emas, gradientning o'zidan keladi — u bepul. */
+.brand-gradient-text {
+  background-image: linear-gradient(
+    100deg,
+    var(--turquoise) 0%,
+    var(--turquoise) 25%,
+    var(--brand-pink) 65%,
+    var(--brand-pink) 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
+/* Sahifadan-sahifaga o'tish (`[locale]/template.tsx` har navigatsiyada qayta
+   mount bo'ladi va bu animatsiya qaytadan ishga tushadi).
+
+   `transform` HAQIDA (2026-08-06 da qayta ko'rildi): transform'li element o'z
+   ichidagi `position: fixed` bolalar uchun "containing block" yaratadi. Avval
+   shu sababdan faqat `opacity` ishlatilgandi. Kod tekshirildi va xavf amalda
+   yo'qligi aniqlandi:
+     - `BottomNav` va `SosButton` `<main>` dan TASHQARIDA (layout'da) — o'ramga
+       umuman kirmaydi;
+     - `<main>` ichidagi yagona `fixed` — modallar, ular esa foydalanuvchi
+       bosganda ochiladi, ya'ni sahifa endigina mount bo'lgan 0.28 soniyada
+       ochiq turishi mumkin emas;
+     - animatsiya tugagach `transform: none` qoladi va containing block
+       yo'qoladi (`none` uni yaratmaydi).
+   Shuning uchun kichik ko'tarilish qo'shildi — o'tish ko'zga tashlanadi. */
+.mo-page {
+  animation: mo-page-in var(--dur-base) var(--ease-out) both;
+}
+/* Brauzer View Transition'ni qo'llab-quvvatlasa — o'sha ishlaydi, bu esa
+   o'chadi. Ikkalasi birga yursa sahifa ikki marta ochilardi. */
+html.has-view-transitions .mo-page {
+  animation: none;
+}
+
+/* ===== View Transition (brauzer mexanizmi, `ui/ViewTransitions.tsx`) =====
+   Standart o'tish oddiy so'nish. Bu yerda unga kichik siljish qo'shamiz —
+   yangi sahifa pastdan ko'tariladi, eskisi joyida so'nadi. Barchasi
+   kompozitorda, JS kadr sikliga bog'liq emas. */
+::view-transition-old(root) {
+  animation: vt-out var(--dur-fast) var(--ease-out) both;
+}
+::view-transition-new(root) {
+  animation: vt-in var(--dur-base) var(--ease-out) both;
+}
+@keyframes vt-out {
+  to {
+    opacity: 0;
+  }
+}
+@keyframes vt-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation: none;
+  }
+}
+@keyframes mo-page-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* ===== Modal fizikasi =====
+   `mo-pop` — prujinali chiqish: `--ease-spring` oxirida 1 dan sal oshib
+   qaytadi, oyna "sakrab kelib to'xtagandek" tuyuladi. Ilgari `zoom-in-95`
+   ishlatilardi va u deyarli sezilmasdi.
+   `mo-scrim` — fon qorayishi biroz TEZROQ (fast), oyna esa base bilan keladi:
+   avval fon so'nadi, keyin oyna chiqadi — ketma-ketlik chuqurlik beradi. */
+.mo-pop {
+  animation: mo-pop-in var(--dur-base) var(--ease-spring) both;
+}
+@keyframes mo-pop-in {
+  from {
+    opacity: 0;
+    transform: scale(0.92) translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.mo-scrim {
+  animation: mo-scrim-in var(--dur-fast) var(--ease-out) both;
+}
+@keyframes mo-scrim-in {
+  from {
+    opacity: 0;
+  }
+}
+
+/* O'zgargan qiymatga qisqa turtki (sanagich, narx). Raqam almashganini ko'z
+   ilg'ashi uchun — sensorli ekranda hover yo'q, yagona javob shu.
+   `key` o'zgarishi bilan element qayta yaratiladi va animatsiya qayta yuradi. */
+.mo-bump {
+  display: inline-block;
+  animation: mo-bump-in var(--dur-fast) var(--ease-spring) both;
+}
+@keyframes mo-bump-in {
+  from {
+    opacity: 0.4;
+    transform: scale(0.82);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Yuklanish tugab kontent kelganda — keskin almashuv o'rniga yumshoq chiqish.
+   Skeleton'dan kontentga o'tish eng ko'p takrorlanadigan holat va aynan u
+   "sayt shoshqaloq" hissini berardi. */
+.mo-in {
+  animation: mo-fade-up var(--dur-base) var(--ease-out) both;
+}
+
+/* Kartani ko'tarish — "tirik" his uchun eng arzon usul (faqat transform).
+   `@media (hover: hover)`: sensorli ekranda hover "yopishib" qolmasin. */
+.mo-lift {
+  transition: transform var(--dur-fast) var(--ease-out);
+}
+@media (hover: hover) {
+  .mo-lift:hover {
+    transform: translateY(-2px);
+  }
+}
+.mo-lift:active {
+  transform: scale(0.99);
+}
+
+@keyframes mo-fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+/* Harakatni kamaytirish. Global qoida (yuqorida) davomiylikni 0.01ms qiladi, lekin
+   KECHIKISHGA tegmaydi — usiz elementlar baribir navbat bilan "sakrab" chiqardi.
+   Shu yerda kechikishlar ham nolga tushiriladi. */
+@media (prefers-reduced-motion: reduce) {
+  .mo-stagger > *,
+  .mo-stagger-item,
+  .mo-split-word {
+    animation-delay: 0s !important;
+  }
+  .mo-lift:hover,
+  .mo-lift:active {
+    transform: none;
+  }
+  .mo-page {
+    animation: none;
+  }
+}
+
+/* Serif display sarlavha — FAQAT font-display klassi orqali (H1/hero uchun).
+   Barcha sarlavhalarга emas — spec: serif faqat katta sarlavhalarda. */
+.font-display {
+  font-family: var(--font-display);
+  letter-spacing: -0.01em;
+}
+
+/* Almashib turadigan yozuv (hero chipi, `RotatingText`).
+   Ilgari buni framer-motion qilardi va u loyihadagi YAGONA foydalanuvchi
+   edi — izohi komponent faylida. `prefers-reduced-motion` uchun alohida
+   qoida KERAK EMAS: yuqoridagi umumiy `*` qoidasi animatsiyani o'zi
+   to'xtatadi. */
+@keyframes rt-rise {
+  from {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.rt-word {
+  /* Chiqishdagi yengil "otilish" — eski spring (damping 30, stiffness 400)
+     shunga yaqin his qoldirardi. */
+  animation: rt-rise 0.42s cubic-bezier(0.22, 1.2, 0.36, 1) both;
+}
+
+/* Glassmorphism Utilities */
+.glass-panel {
+  background-color: var(--glass-bg);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid var(--glass-border);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.05);
+}
+
+.text-glow {
+  text-shadow: 0 0 20px var(--shadow-color);
+}
+
+.input-inner-shadow {
+  box-shadow: inset 0 2px 4px 0 rgba(0, 0, 0, 0.03);
+}
+
+.dark .input-inner-shadow {
+  box-shadow: inset 0 2px 4px 0 rgba(0, 0, 0, 0.2);
+}
+
+/* Стилизация скроллбара */
+/* ===== BRAUZER STANDARTLARINI BRENDGA O'TKAZISH =====
+   Bular ko'zga alohida tashlanmaydi, lekin birgalikda "tayyor shablon" bilan
+   "o'ylab qilingan mahsulot" farqini beradi. Har biri brauzerning o'z ko'k
+   rangini brend rangiga almashtiradi. */
+
+/* Matn ajratilganda — ko'k emas, turkuaz. Matn rangi ATAYIN wine-ash:
+   turkuaz ikkala temada ham och, ustida oq matn o'qilmasdi. */
+::selection {
+  background: var(--turquoise);
+  color: var(--wine-ash);
+}
+
+/* Klaviatura bilan yurganda fokus halqasi — brend pushti.
+   `:focus-visible` (`:focus` EMAS): sichqoncha bilan bosganda halqa
+   chiqmaydi, klaviatura/skrinrider bilan yurganda chiqadi. Halqani UMUMAN
+   olib tashlash mumkin emas — klaviatura bilan ishlaydigan odam qayerda
+   turganini yo'qotadi. */
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* Matn kiritish chizig'i (karetka) va tanlov boshqaruvlari (checkbox, radio,
+   range, progress) — tizim ko'ki o'rniga brend rangi. */
+:root {
+  caret-color: var(--accent);
+  accent-color: var(--accent);
+}
+
+/* Aylantirish paneli — Firefox uchun (quyidagi `::-webkit-*` faqat
+   Chrome/Safari'da ishlaydi, Firefox ularni bilmaydi). */
+html {
+  scrollbar-color: var(--border-color) transparent;
+  scrollbar-width: thin;
+}
+
+/* ===== BOSISH JAVOBI (butun sayt) =====
+   Ilgari faqat `Button` komponentida `active:scale` bor edi; havolalar,
+   kartalar, chiplar va navigatsiya bosilganda hech qanday javob bermasdi.
+   Sensorli ekranda hover yo'q, ya'ni bosish "yetib bordimi" degan savolga
+   javob beradigan yagona narsa shu.
+
+   `transform` FAQAT bosilgan lahzada qo'llanadi — o'sha payt ichidagi
+   `position: fixed` bola bo'lsa siljishi mumkin, lekin bosish 100 ms davom
+   etadi va bosilayotgan element modal o'rami bo'lishi amalda uchramaydi. */
+button:not(:disabled):active,
+a:active,
+[role='button']:not([aria-disabled='true']):active,
+label:has(input[type='checkbox']):active,
+label:has(input[type='radio']):active {
+  transform: scale(0.985);
+}
+button,
+a,
+[role='button'] {
+  transition: transform var(--dur-fast) var(--ease-out);
+}
+@media (prefers-reduced-motion: reduce) {
+  button:not(:disabled):active,
+  a:active,
+  [role='button']:active {
+    transform: none;
+  }
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border-color);
+  border-radius: var(--radius-sm);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-muted);
+}
+
+/* ===== YANGILASH IMORASI («yo'l g'ildiragi») =====
+   `shared/ui/PullToRefresh` uchun. Nega kerak bo'ldi: yuqorida
+   `body { overscroll-behavior: none }` turadi — u brauzerning o'z
+   "tortib yangilash" harakatini O'CHIRADI. PWA standalone rejimida esa
+   manzil paneli ham, yangilash tugmasi ham yo'q. Ya'ni telefonda sahifani
+   yangilashning HECH QANDAY yo'li qolmagan edi.
+
+   Shakl brend tizimidan: tashqi halqa — punktir yo'l chizig'i, ichida
+   suzani rozetkasi (`SuzaniBloom` bilan bir oila). Tortilgan sari barglar
+   birma-bir ochiladi (`--p` progressi orqali, JS taymersiz), qo'yib
+   yuborilganda esa butun belgi g'ildirakdek aylanadi.
+
+   Aylanish CHEKSIZ, lekin faqat so'rov ketayotgan vaqtda: `.ptr-spin`
+   klassi javob kelishi bilan olib tashlanadi. Bezak sifatida cheksiz
+   animatsiya yo'q. */
+.ptr-petal {
+  transform-box: fill-box;
+  transform-origin: 50% 100%;
+  /* Barg `--i`-chi navbatda "ochiladi": progress (`--p`, 0..1) shu bargning
+     ulushidan oshganda ko'rinadi. Hisob CSS'da — har kadrda JS ishlamaydi. */
+  opacity: clamp(0, (var(--p) - var(--i) / 8) * 8, 1);
+  scale: clamp(0.3, 0.3 + (var(--p) - var(--i) / 8) * 5.6, 1);
+}
+
+/* Markaz — barglar tugagach "bosiladi" (progress 1 ga yetganda). */
+.ptr-core {
+  transform-box: fill-box;
+  transform-origin: center;
+  opacity: clamp(0, (var(--p) - 0.85) * 6.7, 1);
+  scale: clamp(0, (var(--p) - 0.85) * 6.7, 1);
+}
+
+/* Yo'l halqasi — tortilgan sari to'la aylanaga yig'iladi.
+   `stroke-dashoffset` layout talab qilmaydi (faqat paint) va aylana
+   uzunligi 100 ga normallashtirilgan (`pathLength`), ya'ni hisob oddiy. */
+.ptr-road {
+  stroke-dasharray: 6 6;
+  stroke-dashoffset: calc((1 - var(--p)) * 100);
+  opacity: calc(0.25 + var(--p) * 0.75);
+}
+
+/* So'rov ketayotganda — g'ildirak aylanadi. */
+.ptr-spin {
+  animation: ptr-turn 1.1s linear infinite;
+}
+@keyframes ptr-turn {
+  to {
+    rotate: 360deg;
+  }
+}
+
+/* Javob keldi — turkuaz halqa bir marta "nafas oladi" va imora yig'iladi. */
+.ptr-done {
+  animation: ptr-done-pulse var(--dur-slow) var(--ease-spring) both;
+}
+@keyframes ptr-done-pulse {
+  0% {
+    scale: 1;
+  }
+  40% {
+    scale: 1.18;
+  }
+  100% {
+    scale: 1;
+  }
+}
+
+/* ===== OTP — KOD KATAKLARI =====
+   `shared/ui/OTPInput` uchun.
+
+   🔴 NEGA QISQARDI (egasi, 2026-09-07: "otp animationni oddiy qilib
+   shunchaki yashil yonib tekshirishni tasdiqlaydigan qilaylik, hozirgi
+   animation qotib qotib ishlayapti").
+
+   Bu yerda ilgari «yo'ldagi bekatlar» turardi: punktir yo'l (`otp-road-fill`),
+   bekatdan bekatga yuruvchi mashina (`otp-car`) egzoz tutuni bilan
+   (`otp-puff`), tasdiqda kataklar ustidan sweep qiluvchi katta mashina
+   (`otp-bigcar`, `otp-bigdrive`), «yutilgan» kataklar (`otp-eat`), uchib
+   chiquvchi devor parchalari (`otp-frag`), manzil rozetkasi (`otp-finish`)
+   va xatoda tormoz bosuvchi mashina (`otp-crash`). Hammasi olib tashlandi.
+
+   ⚠️ IKKALA MIJOZDA BIR KUNDA: aynan shu shakl Flutter ilovasida ham bor
+   edi va u yerda har kadrda qayta chizilib kadr tushirardi. Juftligi —
+   `otp_code_field.dart`.
+
+   Qolgani: raqam tushganda muhr bosilishi, xatoda chayqalish va tasdiqda
+   yashil yonish. */
+
+/* Katak — raqam tushganda "muhr bosilgandek" bosilib qaytadi. */
+.otp-cell[data-filled='true'] {
+  animation: otp-stamp var(--dur-base) var(--ease-spring) both;
+}
+@keyframes otp-stamp {
+  0% {
+    scale: 1;
+  }
+  35% {
+    scale: 0.88;
+  }
+  100% {
+    scale: 1;
+  }
+}
+
+/* Xato — qator bir marta chayqaladi. Rang bilan birga harakat ham beriladi:
+   rangni ajratmaydigan odam ham xatoni sezishi kerak. */
+.otp-shake {
+  animation: otp-shake var(--dur-slow) var(--ease-out) both;
+}
+@keyframes otp-shake {
+  0%,
+  100% {
+    translate: 0;
+  }
+  20% {
+    translate: -6px;
+  }
+  45% {
+    translate: 5px;
+  }
+  70% {
+    translate: -3px;
+  }
+}
+
+/* ===== TASDIQ — YASHIL YONISH =====
+   Kod TO'G'RI ekani ANIQ bo'lgach kataklar yashilga o'tadi.
+
+   🔑 NEGA `--verified`, `--success` EMAS: saytda `--success` feruzaga
+   bog'langan (`var(--turquoise)`), ya'ni brend aksentining o'zi. Feruza
+   «bor» degani, tasdiq esa «tekshirildi va joyida» — bular boshqa gap va
+   ilovada ular ATAYIN ikki xil rang. `--verified` ikkala mijozda bir xil
+   qiymat (#1fa971).
+
+   ⚠️ YASHIL FAQAT CHEGARA VA BELGIDA, YOZUVDA EMAS: #1fa971 oq zaminda
+   3.05:1 beradi — ikonka/chegara uchun yetadi (kerak 3:1), mayda yozuv
+   uchun yetmaydi (kerak 4.5:1). Yozuv `text-text-muted` da qoladi. */
+.otp-ok {
+  border-color: var(--verified);
+  background-color: color-mix(in srgb, var(--verified) 10%, var(--surface));
+}
+.otp-ok-icon {
+  color: var(--verified);
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   KATTAROQ MATN — FAQAT MATN, joylashuv EMAS.
+
+   🔴 NEGA SHUNDAY (egasi, 2026-08-27: «profil sochilib ketgan»):
+   birinchi urinishda `html { font-size: 160% }` qilingandi. Tailwind'da
+   esa BO'SHLIQ va KENGLIK ham `rem` da o'lchanadi, ya'ni matn bilan
+   birga BUTUN joylashuv cho'zilardi:
+
+       p-5        20px  →  32px
+       gap-3      12px  →  19px
+       max-w-2xl  672px → 1075px   ← hech qaysi telefonga sig'maydi
+
+   Konteyner ekrandan kengaygach sahifa yon tomonga surilardi va
+   bloklar bir-birining ustiga chiqardi — aynan «sochilib ketgan».
+
+   Endi faqat MATN o'lchamlari qayta belgilanadi. Bo'shliq, kenglik,
+   tugma balandligi TEGILMAYDI — joylashuv butun qoladi.
+
+   ⚠️ Koeffitsent 1.6 emas, 1.25: matn kattalashadi-yu, uzun so'zlar
+   («Bildirishnomalar», «Tasdiqlanmagan») tor telefonda qatorga
+   sig'maydi va kesiladi. 1.25 — o'qishga sezilarli yordam beradigan,
+   lekin matnni buzmaydigan chegara.
+
+   🔑 Ilovadagi 1.6 dan farq qilishi TABIIY: u yerda Flutter matnni
+   layout'dan mustaqil masshtablaydi (`textScaler`), bu yerda esa CSS
+   birliklari umumiy.
+   ═══════════════════════════════════════════════════════════════════ */
+:root[data-bigtext='1'] {
+  --bt: 1.25;
+}
+:root[data-bigtext='1'] .text-xs {
+  font-size: calc(0.75rem * var(--bt));
+}
+:root[data-bigtext='1'] .text-sm {
+  font-size: calc(0.875rem * var(--bt));
+}
+:root[data-bigtext='1'] .text-base {
+  font-size: calc(1rem * var(--bt));
+}
+:root[data-bigtext='1'] .text-lg {
+  font-size: calc(1.125rem * var(--bt));
+}
+:root[data-bigtext='1'] .text-xl {
+  font-size: calc(1.25rem * var(--bt));
+}
+:root[data-bigtext='1'] .text-2xl {
+  font-size: calc(1.5rem * var(--bt));
+}
+:root[data-bigtext='1'] .text-3xl {
+  font-size: calc(1.875rem * var(--bt));
+}
+:root[data-bigtext='1'] .text-4xl {
+  font-size: calc(2.25rem * var(--bt));
+}
+/* Qo'lda yozilgan mayda o'lchamlar — ular eng ko'p qiynaydiganlari,
+   chunki 9-11px keksa odam uchun umuman o'qilmaydi. */
+:root[data-bigtext='1'] .text-\[9px\] {
+  font-size: calc(9px * var(--bt));
+}
+:root[data-bigtext='1'] .text-\[10px\] {
+  font-size: calc(10px * var(--bt));
+}
+:root[data-bigtext='1'] .text-\[11px\] {
+  font-size: calc(11px * var(--bt));
+}
+:root[data-bigtext='1'] .text-\[15px\] {
+  font-size: calc(15px * var(--bt));
+}
+:root[data-bigtext='1'] .text-\[0\.6rem\] {
+  font-size: calc(0.6rem * var(--bt));
+}
+:root[data-bigtext='1'] .text-\[0\.65rem\] {
+  font-size: calc(0.65rem * var(--bt));
+}
+:root[data-bigtext='1'] .text-\[0\.8125rem\] {
+  font-size: calc(0.8125rem * var(--bt));
+}
+:root[data-bigtext='1'] .text-\[0\.9375rem\] {
+  font-size: calc(0.9375rem * var(--bt));
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   XARITA — TEMAGA BO'YSUNADI (17.09.2026)
+
+   🔴 NEGA (egasi: «alohida sahifaga qo'yilgan, loyihaga
+   uyg'unlashtirilmagan»). Saytda oltita xarita bor va ularning
+   HAMMASI OSM'ning standart och-bej plitkalarini ko'rsatardi — tema
+   qanday bo'lishidan qat'i nazar. Tungi temada bu ochiq nuqson edi:
+   qop-qora sahifa o'rtasida OPPOQ yonib turgan to'rtburchak. Neon
+   uslubda ham xarita begona bo'lib qolardi.
+
+   Endi plitkalar temaga moslanadi. Qoida: RANG emas, TUS o'zgaradi —
+   xarita o'qiladigan bo'lib qolishi shart (yo'llar, suv, chegara).
+
+   ⚠️ Filtr FAQAT plitkalarga (`img.leaflet-tile`) qo'llanadi: belgilar
+   va chiziqlar boshqa qatlamda turadi va ular allaqachon brend
+   ranglarida (`mapIcons.ts` tokenlardan o'qiydi).
+   ═══════════════════════════════════════════════════════════════════ */
+
+/* Yorug' tema: OSM'ning yashil-beji brend palitrasi (vino + pushti)
+   bilan urishmasin — sal so'niq va issiqroq. */
+.leaflet-tile {
+  filter: saturate(0.82) contrast(1.02) brightness(1.02) sepia(0.06);
+}
+
+/* To'q tema: «tungi xarita». Teskari qilib rang burchagini 180°
+   aylantiramiz — suv ko'k, yo'l och bo'lib QOLADI, zamin esa to'q. */
+.dark .leaflet-tile {
+  filter: invert(1) hue-rotate(180deg) saturate(0.7) brightness(0.92) contrast(0.92);
+}
+
+/* Neon: o'sha tungi xarita, lekin kontrast kuchliroq — neon uslubning
+   o'zi shunday (yorqin chiziq, to'q zamin). */
+.neon.dark .leaflet-tile {
+  filter: invert(1) hue-rotate(180deg) saturate(0.9) brightness(0.86) contrast(1.06);
+}
+
+/* 🔴 PROVAYDERNING O'Z TUNGI USLUBI bo'lsa, filtr TEGMASIN: allaqachon
+   to'q plitkani teskari qilsak u yana OPPOQ bo'lib qolardi. Klass
+   `useTileUrl()` dan keladi (`shared/lib/mapTiles.ts`) va faqat tungi
+   manzil sozlangan yig'ilishda paydo bo'ladi. */
+.leaflet-layer.map-tiles-provider-dark .leaflet-tile,
+.dark .leaflet-layer.map-tiles-provider-dark .leaflet-tile,
+.neon.dark .leaflet-layer.map-tiles-provider-dark .leaflet-tile {
+  filter: none;
+}
+
+/* Xarita ichidagi yozuvlar SAYT shriftida bo'lsin: Leaflet o'zining
+   Helvetica'sini majburlaydi va belgilar begona ko'rinardi. */
+.leaflet-container {
+  font-family: inherit;
+}
+
+/* Xarita ramkasi ichidagi ochilma (popup) ham brend sirtida. */
+.leaflet-popup-content-wrapper,
+.leaflet-popup-tip {
+  background: var(--surface);
+  color: var(--text-color);
+  border: 1px solid var(--border-color);
+}
+
+/* Xaritadagi CHIZIQLAR — rang JS'da o'qiladi, CSS'da EMAS.
+
+   🔴 17.09.2026 da o'lchandi: Leaflet chiziq rangini SVG ATRIBUTIGA
+   yozadi va react-leaflet `pathOptions` ni `setStyle` bilan qo'llaydi —
+   u `className` ni bilmaydi. Natijada bu yerdagi klasslar element
+   ustiga TUSHMAY qolgan va saytdagi hamma marshrut chizig'i Leaflet'ning
+   standart KO'K rangida chizilgan edi (`rgb(51,136,255)` — o'lchandi).
+
+   Endi rang `shared/lib/mapColors.ts` da tokenlardan O'QILADI va
+   `color` bo'lib beriladi; tema almashsa qayta o'qiladi. */

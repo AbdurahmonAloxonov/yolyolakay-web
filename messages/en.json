@@ -1,0 +1,75 @@
+{
+  "Common": {
+    "appName": "YolYolakay",
+    "logout": "Log out",
+    "save": "Save",
+    "cancel": "Cancel",
+    "back": "Back",
+    "next": "Next",
+    "send": "Send",
+    "currency": "UZS",
+    "loading": "Loading...",
+    "verified": "Verified"
+  },
+  "Auth": {
+    "loginTitle": "Sign in",
+    "loginSubtitle": "Enter your phone number to receive a one-time code",
+    "phoneLabel": "Phone number",
+    "phonePlaceholder": "+998 90 123 45 67",
+    "sendOtp": "Get the code",
+    "verifyTitle": "Confirm the code",
+    "verifySubtitle": "We sent a one-time code to {phone}",
+    "otpLabel": "Code from the SMS",
+    "verifyBtn": "Confirm the code",
+    "invalidOtp": "Wrong code. Please try again.",
+    "timerText": "Resend in {seconds}s"
+  },
+  "Profile": {
+    "title": "My account",
+    "balance": "Ride balance",
+    "tripsCount": "{count} trips",
+    "noTrips": "No trips",
+    "statusVerified": "Driver verified",
+    "roleDriver": "Driver",
+    "rolePassenger": "Passenger",
+    "phone": "Phone",
+    "activeTariff": "Active plan",
+    "noTariff": "No active plan"
+  },
+  "Tariffs": {
+    "title": "Plans and subscriptions",
+    "subtitle": "Choose a plan to keep using the platform",
+    "paywallTitle": "Access restricted",
+    "paywallDesc": "To create a trip or take part in bidding you need to top up your balance or buy a plan.",
+    "buyBtn": "Buy for {price}",
+    "successBuy": "Plan purchased successfully!",
+    "popular": "Best value"
+  },
+  "Bidding": {
+    "title": "Bidding for trip #{id}",
+    "status": "Status: {status}",
+    "startPoint": "From: {from}",
+    "endPoint": "To: {to}",
+    "initialPrice": "Starting price: {price}",
+    "currentBids": "Current offers",
+    "placeBid": "Make an offer",
+    "bidPlaceholder": "Enter the amount in UZS",
+    "noBids": "No offers yet. Be the first!",
+    "wsDisconnected": "Connection lost. Reconnecting...",
+    "wsConnected": "Connected",
+    "errorMinBid": "Your offer must be higher than the current one!"
+  },
+  "Trips": {
+    "searchTitle": "Find a ride",
+    "searchSubtitle": "Find travel companions at a fair price",
+    "from": "From",
+    "to": "To",
+    "searchBtn": "Search",
+    "createTitle": "Create a trip",
+    "step1": "Route",
+    "step2": "Trip details",
+    "step3": "Price",
+    "createBtn": "Publish the trip",
+    "historyTitle": "Trip history"
+  }
+}

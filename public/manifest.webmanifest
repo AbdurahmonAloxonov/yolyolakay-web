@@ -1,0 +1,72 @@
+{
+  "id": "/",
+  "name": "YolYolakay — yo'l hamrohi",
+  "short_name": "YolYolakay",
+  "description": "O'zbekiston bo'ylab hamroh topish: yo'lovchi va haydovchilar uchun ilova.",
+  "lang": "uz",
+  "dir": "ltr",
+  "start_url": "/login",
+  "scope": "/",
+  "display": "standalone",
+  "display_override": ["standalone", "minimal-ui"],
+  "orientation": "portrait",
+  "background_color": "#ffffff",
+  "theme_color": "#c71578",
+  "categories": ["travel", "transportation", "lifestyle"],
+  "related_applications": [
+    {
+      "platform": "play",
+      "id": "uz.yolyolakay.mobile",
+      "url": "https://play.google.com/store/apps/details?id=uz.yolyolakay.mobile"
+    }
+  ],
+  "prefer_related_applications": true,
+  "icons": [
+    { "src": "/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ],
+  "shortcuts": [
+    {
+      "name": "Safar qidirish",
+      "short_name": "Qidiruv",
+      "url": "/search",
+      "icons": [{ "src": "/icon-192.png", "sizes": "192x192", "type": "image/png" }]
+    },
+    {
+      "name": "Chatlar",
+      "short_name": "Chat",
+      "url": "/chats",
+      "icons": [{ "src": "/icon-192.png", "sizes": "192x192", "type": "image/png" }]
+    },
+    {
+      "name": "Safarlar tarixi",
+      "short_name": "Tarix",
+      "url": "/history",
+      "icons": [{ "src": "/icon-192.png", "sizes": "192x192", "type": "image/png" }]
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "/screenshots/search.png",
+      "sizes": "780x1688",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "Safar qidirish"
+    },
+    {
+      "src": "/screenshots/history.png",
+      "sizes": "780x1688",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "Safarlar tarixi"
+    },
+    {
+      "src": "/screenshots/profile.png",
+      "sizes": "780x1688",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "Profil"
+    }
+  ]
+}

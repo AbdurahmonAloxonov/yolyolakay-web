@@ -1,0 +1,514 @@
+/* ===== YOLYOLAKAY — Premium Light Landing ===== */
+
+/* Global app Header'ni yashiramiz (landing o'zining header'iga ega). */
+html:has(.landing-page) header:not(.ll-header) {
+  display: none !important;
+}
+
+/* globals.css html/body'ni height:100% qiladi (app-shell ichki scroll uchun).
+   Landing oddiy hujjat oqimi + oq fon + silliq scroll. */
+html:has(.landing-page) {
+  scroll-behavior: smooth;
+}
+html:has(.landing-page),
+html:has(.landing-page) body {
+  height: auto !important;
+  min-height: 100% !important;
+  overflow-y: visible !important;
+  /* Tema tokeni (oq EMAS): tungi temada oq "yaltirash" chiqmasin. */
+  background: var(--background) !important;
+}
+/* Pastki xavfsiz zonani landing'da FUTERNING O'ZI qoplaydi (footer .pb-safe) —
+   body'ning padding'i bo'lsa, to'q futer ostida yorug' chiziq ko'rinib qolardi. */
+html:has(.landing-page) body {
+  padding-bottom: 0 !important;
+}
+
+/* Qidiruv paneli inputlari — karta ustida, temaga mos matn rangi
+   (fiksirlangan to'q rang tungi temada ko'rinmay qolardi). */
+.ll-input {
+  width: 100%;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: var(--foreground);
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+.ll-input::placeholder {
+  color: var(--text-muted);
+  opacity: 0.75;
+  font-weight: 500;
+}
+/* Sana tanlagich ikonkasi tungi temada qora kvadrat bo'lib qolmasin. */
+.dark .ll-input::-webkit-calendar-picker-indicator {
+  filter: invert(1) opacity(0.7);
+}
+
+/* ===== Kirish animatsiyalari — FAQAT CSS =====
+   framer-motion (rAF) emas: Chrome oyna occluded/fon deb hisoblasa yoki WebView
+   ochilishida rAF muzlaydi va JS-animatsiya opacity:0 da qotib qoladi.
+   CSS animatsiya soat bo'yicha yuradi va yakuniy holat (ko'rinish) kafolatlanadi. */
+
+/* Hero: sahifa ochilishida bir martalik fade+slide (kechikish --d orqali) */
+.ll-enter {
+  animation: ll-fade-up 0.4s ease-out both;
+  animation-delay: var(--d, 0s);
+}
+@keyframes ll-fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Scroll-reveal: IntersectionObserver bo'limga .is-in qo'yadi, ichidagi
+   .ll-reveal'lar transition bilan ochiladi (yakuniy holat class'da — rAF'siz ham). */
+.ll-section .ll-reveal {
+  opacity: 0;
+  transform: translateY(16px);
+  transition:
+    opacity 0.4s ease-out,
+    transform 0.4s ease-out;
+  transition-delay: var(--d, 0s);
+  /* SOF-CSS KAFOLAT: JS umuman ishlamasa/yiqilsa ham (WebView, sekin tarmoq, hidratsiya
+     xatosi) 4 soniyadan keyin kontent MAJBURAN ko'rinadi — landing yarmi bo'sh qolmaydi. */
+  animation: ll-failsafe 0.01s linear 4s forwards;
+}
+.ll-section.is-in .ll-reveal {
+  opacity: 1;
+  transform: none;
+}
+@keyframes ll-failsafe {
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Harakatni kamaytirish (global qoida globals.css'da; bu yerda scroll uchun) */
+@media (prefers-reduced-motion: reduce) {
+  html:has(.landing-page) {
+    scroll-behavior: auto;
+  }
+  .ll-enter {
+    animation: none;
+  }
+  .ll-section .ll-reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
+/* ══════════════════════════════════════════════════════════════════
+   IPAK ZAMINI — sahifa foni (2026-08-30)
+
+   🔴 NEGA (egasi: «sayt juda oddiy bo'lib ketib qolgan, backgroundlarga
+   ham e'tibor ber»): zamin tekis oq edi. Tekis oq — bu «hali
+   bezatilmagan» degan taassurot beradi, chunki hech qanday qaror
+   ko'rinmaydi.
+
+   Yechim GRADIENT EMAS. Gradient shablon hidini beradi. Yechim —
+   MATO: atlas ranglaridan olingan juda past quyuqlikdagi ikkita
+   yumshoq dog' + ipakning mayda donadorligi. Ekranda u fon sifatida
+   deyarli sezilmaydi, lekin oq varaq bo'lmay qoladi — xuddi qimmat
+   qog'ozdek.
+
+   ⚠️ Quyuqlik ATAYIN juda past (0.05 gacha): kuchaytirilsa matn
+   ostidagi rang o'ynay boshlaydi va o'qish qiyinlashadi.
+   ══════════════════════════════════════════════════════════════════ */
+.ll-silk {
+  position: relative;
+  isolation: isolate;
+}
+.ll-silk::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(60% 55% at 12% 0%, rgba(199, 21, 120, 0.055), transparent 70%),
+    radial-gradient(55% 50% at 92% 12%, rgba(31, 158, 146, 0.07), transparent 72%);
+}
+.dark .ll-silk::before {
+  background:
+    radial-gradient(60% 55% at 12% 0%, rgba(199, 21, 120, 0.1), transparent 70%),
+    radial-gradient(55% 50% at 92% 12%, rgba(31, 158, 146, 0.1), transparent 72%);
+}
+
+/* Ipak donadorligi — SVG shovqin, bitta element, rasm so'ramaydi. */
+.ll-grain::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  opacity: 0.35;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='0.06'/%3E%3C/svg%3E");
+}
+
+/* ══════════════════════════════════════════════════════════════════
+   KARTOCHKA — surat sekin yaqinlashadi, kartochka ko'tariladi.
+
+   Harakat 700ms va `cubic-bezier` bilan: 200ms lik "sakrash" arzon
+   ko'rinadi, 700ms lik silliq yaqinlashuv esa qimmat.
+   ══════════════════════════════════════════════════════════════════ */
+.ll-card {
+  transition:
+    transform 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+  box-shadow: 0 1px 2px rgba(50, 41, 47, 0.06);
+}
+.ll-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 18px 40px -18px rgba(50, 41, 47, 0.45);
+}
+.ll-card-img {
+  transition: transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.ll-card:hover .ll-card-img {
+  transform: scale(1.07);
+}
+
+/* ══════════════════════════════════════════════════════════════════
+   SARLAVHA NIQOBI — matn PASTDAN ochiladi, xuddi mato tagidan
+   chiqayotgandek. `clip-path` bilan: opacity'dan ko'ra qat'iyroq va
+   "brendli" harakat.
+   ══════════════════════════════════════════════════════════════════ */
+.ll-section .ll-mask {
+  clip-path: inset(0 0 100% 0);
+  transform: translateY(0.35em);
+  transition:
+    clip-path 0.75s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.75s cubic-bezier(0.22, 1, 0.36, 1);
+  transition-delay: var(--d, 0s);
+  animation: ll-mask-failsafe 0.01s linear 4s forwards;
+}
+.ll-section.is-in .ll-mask {
+  clip-path: inset(0 0 -0.25em 0);
+  transform: none;
+}
+@keyframes ll-mask-failsafe {
+  to {
+    clip-path: inset(0 0 -0.25em 0);
+    transform: none;
+  }
+}
+
+/* Atlas belgisi ENIGA to'qiladi — mato to'qilayotgandek. */
+.ll-section .ll-weave {
+  transform: scaleX(0);
+  transform-origin: center;
+  transition: transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+  transition-delay: var(--d, 0.1s);
+  animation: ll-weave-failsafe 0.01s linear 4s forwards;
+}
+.ll-section.is-in .ll-weave {
+  transform: scaleX(1);
+}
+@keyframes ll-weave-failsafe {
+  to {
+    transform: scaleX(1);
+  }
+}
+
+/* Hero surati — sahifa ochilganda sekin yaqinlashadi (bir martalik). */
+.ll-hero-img {
+  animation: ll-hero-zoom 1.4s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+@keyframes ll-hero-zoom {
+  from {
+    transform: scale(1.08);
+  }
+  to {
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ll-card,
+  .ll-card-img,
+  .ll-hero-img {
+    transition: none;
+    animation: none;
+  }
+  .ll-card:hover {
+    transform: none;
+  }
+  .ll-card:hover .ll-card-img {
+    transform: none;
+  }
+  .ll-section .ll-mask,
+  .ll-section .ll-weave {
+    clip-path: none;
+    transform: none;
+    transition: none;
+    animation: none;
+  }
+}
+
+/* ══════════════════════════════════════════════════════════════════
+   PESHTOQ — kartochka ravoq shaklida kesiladi (2026-08-30).
+
+   `clip-path` CSS'da: har kartochka uchun alohida SVG `clipPath`
+   yaratish o'rniga bitta qoida. Nisbatlar `Ornament.tsx` dagi
+   `PESHTOQ_PATH` bilan BIR XIL — ikkalasi bir shakl bo'lishi shart,
+   aks holda hero va kartochkalar boshqa-boshqa ravoqli bo'lib
+   qoladi va sahifa yig'ilmaydi.
+   ══════════════════════════════════════════════════════════════════ */
+.ll-peshtoq {
+  clip-path: path(
+    'M0,1 L0,0.46 C0.005,0.245 0.16,0.055 0.335,0.012 C0.39,0 0.61,0 0.665,0.012 C0.84,0.055 0.995,0.245 1,0.46 L1,1 Z'
+  );
+  /* `path()` piksel oladi — shuning uchun nisbiy shakl uchun
+     `clip-path: url()` ishlatiladigan brauzerlarda zaxira sifatida
+     yumaloq burchak qoladi. */
+  border-radius: 1.5rem 1.5rem 0.75rem 0.75rem;
+}
+/* 🔴 FOKUS HALQASI RAVOQ OSTIDA YO'QOLARDI (2026-09-04, o'lchandi).
+   `mask-image` elementning butun chizmasini kesadi — `outline` ham
+   niqobdan tashqarida qoladi va UMUMAN chizilmaydi. Ya'ni klaviatura
+   bilan yuradigan odam mashhur yo'nalishlar orasida qayerda turganini
+   ko'rmasdi (global `:focus-visible` qoidasi bor bo'lsa ham).
+   Yechim — halqani ICHKARIDAN chizish: `inset` soya niqob ichida
+   qoladi va ravoq shaklini takrorlaydi. Oq ingichka chiziq esa
+   halqani QORONG'I suratda ham ajratib turadi. */
+.ll-peshtoq:focus-visible {
+  outline: none;
+  box-shadow:
+    inset 0 0 0 3px var(--accent),
+    inset 0 0 0 5px rgba(255, 255, 255, 0.65);
+}
+
+@supports (clip-path: xywh(0 0 1px 1px round 1px)) {
+  /* Zamonaviy brauzer: ravoq SVG niqobi bilan (nisbiy o'lchamda). */
+  .ll-peshtoq {
+    clip-path: none;
+    -webkit-mask-image: var(--peshtoq-mask);
+    mask-image: var(--peshtoq-mask);
+    -webkit-mask-size: 100% 100%;
+    mask-size: 100% 100%;
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+    border-radius: 0;
+  }
+}
+:root {
+  /* Uchli ravoq — `Ornament.tsx` dagi PESHTOQ_PATH bilan AYNAN bir xil
+     nisbatlar (spring 0.62, r 0.6344). viewBox 100x125 bo'lgani uchun
+     radius ikki o'qda alohida: 63.44 va 79.30. */
+  --peshtoq-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 125' preserveAspectRatio='none'%3E%3Cpath d='M0,125 L0,77.5 A63.44,79.3 0 0 1 50,0 A63.44,79.3 0 0 1 100,77.5 L100,125 Z' fill='%23000'/%3E%3C/svg%3E");
+}
+
+/* ══════════════════════════════════════════════════════════════════
+   GANCH RELYEFI — tema tokenlari (2026-08-31).
+
+   🔴 NEGA TOKEN: relyef ranglari `Ornament.tsx` da qotirib
+   yozilgandi (oq qirra + to'q soya) va u FAQAT yorug' zamin uchun
+   to'g'ri edi. Tungi rejimda oq to'r butun sahifani qoplab, matn
+   umuman o'qilmay qolgandi.
+
+   Ganch tabiatan shunday ishlaydi: yorug' devorda o'yiq qirrasi
+   YORUG', soyasi to'q. Qorong'i devorda esa teskari — va ancha
+   sokinroq, chunki qorong'ida ko'z kontrastga sezgirroq.
+   ══════════════════════════════════════════════════════════════════ */
+:root {
+  --ganch-shadow: rgba(50, 41, 47, 0.16);
+  --ganch-light: rgba(255, 255, 255, 0.95);
+  --ganch-core: rgba(50, 41, 47, 0.055);
+}
+.dark {
+  /* Tungida: qirra XIRA oq (0.95 emas, 0.055), soya esa qora. */
+  --ganch-shadow: rgba(0, 0, 0, 0.45);
+  --ganch-light: rgba(255, 255, 255, 0.055);
+  --ganch-core: rgba(255, 255, 255, 0.022);
+}
+
+/* Girih tasmasining KESIMI — pastdan o'tayotgan tasmani uzib
+   ko'rsatadi. Zamin rangi bo'lishi shart, aks holda kesim ko'rinib
+   qoladi va naqsh iflos bo'ladi. */
+:root {
+  --girih-cut: var(--background);
+  --ganch-cut: var(--background);
+}
+/* To'q panellarda (CTA, futer) zamin `wine-ash` — kesim ham shu
+   rangda bo'lishi shart, aks holda tasma uzilgan joyda yorug' dog'
+   qoladi va o'ralish o'rniga «singan chiziq» ko'rinadi. */
+.ll-dark-panel {
+  --girih-cut: var(--wine-ash);
+}
+
+/* ══════════════════════════════════════════════════════════════════
+   1) RANG CHUQURLIGI (2026-08-31)
+
+   🔴 Muammo: pushti HAMMA joyda edi — tugma, sarlavha, ikonka, nuqta,
+   narx, o'q. Ko'p bo'lgani uchun u kuchini yo'qotgan: ko'z uni endi
+   «muhim» deb o'qimaydi.
+
+   Yechim — uch pog'onali shkala. Pushti FAQAT bitta ishga qoladi:
+   asosiy amal (qidirish, boshlash, kirish). Qolgan hamma joyda —
+   siyoh va bosiq turkuaz. Kam ishlatilgan rang kuchli rang.
+   ══════════════════════════════════════════════════════════════════ */
+.landing-page {
+  /* To'q banddan siyoh — sarlavha va urg'u uchun (wine-ash'dan chuqurroq). */
+  --ll-ink: #2a1a22;
+  /* Issiq qum — zamin (sof oq emas: oq varaq «bezatilmagan» ko'rinadi). */
+  --ll-sand: #f7f1e9;
+  /* Bosiq turkuaz — ikkinchi darajali urg'u (yorqin turkuaz emas).
+     🔴 2026-09-04 da bir pog'ona to'qlashtirildi: eski #3F8B82
+     yozuv sifatida oq qog'ozda 4.02:1, qum zaminda 3.70:1 edi
+     (WCAG AA — 4.5:1). Aynan shu rangda «14 hudud · 3 til · 0%
+     komissiya» yozuvlari chizilardi. To'q temadagi #57BDB0
+     allaqachon yetarli (7.74:1) — u tegilmadi. */
+  --ll-teal: #37796f;
+  /* Sokin kulrang-siyoh — ikonka va belgilar uchun. */
+  --ll-quiet: #6f6069;
+}
+.dark .landing-page {
+  --ll-ink: #f2e9ee;
+  --ll-sand: #221c21;
+  --ll-teal: #57bdb0;
+  --ll-quiet: #9d8f98;
+}
+
+/* ══════════════════════════════════════════════════════════════════
+   2) SURATLAR BIR OHANGDA
+
+   🔴 To'rtta kartochkada to'rt xil osmon va to'rt xil yorug'lik edi —
+   go'yo boshqa-boshqa saytdan olingan. Yagona grading ularni bitta
+   to'plamga aylantiradi: ko'k bosiladi, iliqlik qo'shiladi, kontrast
+   bir oz ko'tariladi.
+
+   ⚠️ Kuch ATAYIN past: surat «filtrlangan» bo'lib ko'rinmasligi
+   kerak, faqat bir oilada turishi kerak.
+   ══════════════════════════════════════════════════════════════════ */
+.ll-photo {
+  filter: saturate(0.9) contrast(1.05) sepia(0.08) brightness(1.01);
+}
+.dark .ll-photo {
+  filter: saturate(0.86) contrast(1.02) sepia(0.06) brightness(0.94);
+}
+
+/* ══════════════════════════════════════════════════════════════════
+   7) CHIZIQ EMAS, SOYA
+
+   Chiziq — chizma; soya — jism. Kartochkalar endi brend siyohi
+   rangidagi ikki qatlamli yumshoq soya bilan turadi: biri yaqin va
+   quyuq (jism zaminга tegib turadi), ikkinchisi uzoq va keng
+   (havoda turadi). Shu ikkisi birga «o'yilgan» hissini beradi.
+   ══════════════════════════════════════════════════════════════════ */
+.ll-lift {
+  border-color: transparent;
+  box-shadow:
+    0 1px 2px rgba(42, 26, 34, 0.06),
+    0 10px 24px -14px rgba(42, 26, 34, 0.28);
+  transition:
+    transform 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.ll-lift:hover {
+  transform: translateY(-4px);
+  box-shadow:
+    0 2px 4px rgba(42, 26, 34, 0.08),
+    0 22px 44px -20px rgba(42, 26, 34, 0.4);
+}
+.dark .ll-lift {
+  box-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.5),
+    0 12px 28px -16px rgba(0, 0, 0, 0.75);
+}
+
+/* ══════════════════════════════════════════════════════════════════
+   9) MIKRO-DETALLAR
+
+   Go'zallik 4 pikselda yashaydi. Bu yerda uchta narsa:
+     • FOKUS halqasi — brend rangida va ikki qatlamli (oq oraliq),
+       shunda u har qanday zaminda ko'rinadi. Klaviatura bilan
+       yuradigan odam ham brendni ko'radi;
+     • maydon fokusda atlas jiyagini «ochadi» — pastdan ingichka
+       rangli chiziq chiqadi;
+     • tugma bosilganda bir oz «cho'kadi» (0.985), sakramaydi.
+   ══════════════════════════════════════════════════════════════════ */
+.landing-page :focus-visible {
+  outline: 2px solid var(--brand-pink);
+  outline-offset: 2px;
+  border-radius: 6px;
+}
+.ll-field {
+  position: relative;
+  overflow: hidden;
+}
+.ll-field::after {
+  content: '';
+  position: absolute;
+  inset-inline: 0;
+  bottom: 0;
+  height: 2px;
+  background: linear-gradient(
+    90deg,
+    #a81f2a 0 22%,
+    #d08a2c 22% 42%,
+    #17796f 42% 66%,
+    #22306b 66% 86%,
+    #c4157a 86% 100%
+  );
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.ll-field:focus-within::after {
+  transform: scaleX(1);
+}
+.landing-page button:active,
+.landing-page a[class*='rounded-full']:active {
+  transform: scale(0.985);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ll-lift,
+  .ll-field::after {
+    transition: none;
+  }
+  .ll-lift:hover {
+    transform: none;
+  }
+}
+
+/* ══════════════════════════════════════════════════════════════════
+   8) BITTA YAXSHI HARAKAT — scroll bo'yicha parallaks.
+
+   🔴 O'nta fade o'rniga bitta yodda qoladigan harakat. Ikki joyda:
+
+     • HERO SURATI sekin siljiydi — sahifa qatlamli ekani sezilади;
+     • ATLAS TASMASI yon tomonga surilib boradi — MATO OCHILAYOTGANDEK.
+       Bu naqshli tasma uchun ayni ma'no: to'p yozilyapti.
+
+   🔑 Ikkalasi ham `--ll-scroll` o'zgaruvchisiga bog'langan; uni JS
+   bitta `scroll` tinglovchisi bilan yozadi (`requestAnimationFrame`
+   bilan siyraklashtirilgan). Har element o'z tinglovchisini
+   yaratmaydi.
+
+   ⚠️ `transform` dan boshqa xossa qo'zg'atilmaydi — layout qayta
+   hisoblanmaydi, ya'ni surish silliq qoladi.
+   ══════════════════════════════════════════════════════════════════ */
+.ll-parallax {
+  will-change: transform;
+  transform: translate3d(0, calc(var(--ll-p, 0) * -26px), 0);
+}
+.ll-unroll {
+  will-change: transform;
+  transform: translate3d(calc(var(--ll-p, 0) * -120px), 0, 0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ll-parallax,
+  .ll-unroll {
+    transform: none;
+  }
+}

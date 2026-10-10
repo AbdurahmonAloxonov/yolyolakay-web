@@ -1,0 +1,75 @@
+{
+  "Common": {
+    "appName": "YolYolakay",
+    "logout": "Chiqish",
+    "save": "Saqlash",
+    "cancel": "Bekor qilish",
+    "back": "Orqaga",
+    "next": "Keyingi",
+    "send": "Yuborish",
+    "currency": "so'm",
+    "loading": "Yuklanmoqda...",
+    "verified": "Tasdiqlangan"
+  },
+  "Auth": {
+    "loginTitle": "Tizimga kirish",
+    "loginSubtitle": "OTP-kodni olish uchun telefon raqamingizni kiriting",
+    "phoneLabel": "Telefon raqami",
+    "phonePlaceholder": "+998 90 123 45 67",
+    "sendOtp": "Kodni olish",
+    "verifyTitle": "Kodni tasdiqlash",
+    "verifySubtitle": "Biz {phone} raqamiga OTP-kod yubordik",
+    "otpLabel": "SMSdagi kod",
+    "verifyBtn": "Kodni tasdiqlash",
+    "invalidOtp": "Noto'g'ri kod. Qayta urinib ko'ring.",
+    "timerText": "Qayta yuborish {seconds} soniyadan keyin"
+  },
+  "Profile": {
+    "title": "Shaxsiy kabinet",
+    "balance": "Safarlar balansi",
+    "tripsCount": "{count} ta safarlar",
+    "noTrips": "Safarlar yo'q",
+    "statusVerified": "Haydovchi tasdiqlangan",
+    "roleDriver": "Haydovchi",
+    "rolePassenger": "Yo'lovchi",
+    "phone": "Telefon",
+    "activeTariff": "Faol tarif",
+    "noTariff": "Faol tarif yo'q"
+  },
+  "Tariffs": {
+    "title": "Tariflar va obunalar",
+    "subtitle": "Platformada ishlashni davom ettirish uchun tarif rejasini tanlang",
+    "paywallTitle": "Ruxsat cheklangan",
+    "paywallDesc": "Safar yaratish yoki savdolarda qatnashish uchun balansni to'ldirishingiz yoki tarif sotib olishingiz kerak.",
+    "buyBtn": "{price} ga sotib olish",
+    "successBuy": "Tarif muvaffaqiyatli sotib olindi!",
+    "popular": "Eng foydali"
+  },
+  "Bidding": {
+    "title": "#{id}-safar uchun savdolar",
+    "status": "Holati: {status}",
+    "startPoint": "Qayerdan: {from}",
+    "endPoint": "Qayerga: {to}",
+    "initialPrice": "Boshlang'ich narx: {price}",
+    "currentBids": "Joriy takliflar",
+    "placeBid": "Taklif kiritish",
+    "bidPlaceholder": "Summani so'mda kiriting",
+    "noBids": "Hozircha takliflar yo'q. Birinchi bo'ling!",
+    "wsDisconnected": "Aloqa uzildi. Qayta ulanmoqda...",
+    "wsConnected": "Aloqa o'rnatildi",
+    "errorMinBid": "Sizning taklifingiz joriy taklifdan yuqori bo'lishi kerak!"
+  },
+  "Trips": {
+    "searchTitle": "Safarlarni qidirish",
+    "searchSubtitle": "Hamyonbop narxda hamrohlarni toping",
+    "from": "Qayerdan",
+    "to": "Qayerga",
+    "searchBtn": "Qidirish",
+    "createTitle": "Safar yaratish",
+    "step1": "Yo'nalish",
+    "step2": "Safar tafsilotlari",
+    "step3": "Narxi",
+    "createBtn": "Safarni e'lon qilish",
+    "historyTitle": "Safarlar tarixi"
+  }
+}

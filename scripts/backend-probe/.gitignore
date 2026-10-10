@@ -1,0 +1,5 @@
+# Token keshi — hech qachon commit qilinmasin.
+tokens.json
+# Python oraliq fayllari.
+__pycache__/
+*.pyc

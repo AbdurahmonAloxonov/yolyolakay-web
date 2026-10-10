@@ -1,0 +1,12 @@
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "uz.yolyolakay.mobile",
+      "sha256_cert_fingerprints": [
+        "AF:46:E1:48:A5:D8:76:3B:87:E1:13:B8:20:A6:B1:B3:B1:CD:C0:B3:9F:62:A6:76:EA:73:1D:51:AD:C7:9C:D3"
+      ]
+    }
+  }
+]

@@ -1,0 +1,75 @@
+{
+  "Common": {
+    "appName": "YolYolakay",
+    "logout": "Выйти",
+    "save": "Сохранить",
+    "cancel": "Отмена",
+    "back": "Назад",
+    "next": "Далее",
+    "send": "Отправить",
+    "currency": "сум",
+    "loading": "Загрузка...",
+    "verified": "Подтверждён"
+  },
+  "Auth": {
+    "loginTitle": "Вход в систему",
+    "loginSubtitle": "Введите номер телефона для получения OTP-кода",
+    "phoneLabel": "Номер телефона",
+    "phonePlaceholder": "+998 90 123 45 67",
+    "sendOtp": "Получить код",
+    "verifyTitle": "Подтверждение кода",
+    "verifySubtitle": "Мы отправили OTP-код на номер {phone}",
+    "otpLabel": "Код из СМС",
+    "verifyBtn": "Подтвердить код",
+    "invalidOtp": "Неверный код. Попробуйте еще раз.",
+    "timerText": "Повторная отправка через {seconds} сек"
+  },
+  "Profile": {
+    "title": "Личный кабинет",
+    "balance": "Баланс поездок",
+    "tripsCount": "{count} поездок",
+    "noTrips": "Поездок нет",
+    "statusVerified": "Водитель верифицирован",
+    "roleDriver": "Водитель",
+    "rolePassenger": "Пассажир",
+    "phone": "Телефон",
+    "activeTariff": "Активный тариф",
+    "noTariff": "Нет активного тарифа"
+  },
+  "Tariffs": {
+    "title": "Тарифы и подписки",
+    "subtitle": "Выберите тарифный план для продолжения работы на платформе",
+    "paywallTitle": "Доступ заблокирован",
+    "paywallDesc": "Для создания поездок или участия в торгах необходимо пополнить баланс или купить тариф.",
+    "buyBtn": "Купить за {price}",
+    "successBuy": "Тариф успешно куплен!",
+    "popular": "Выгоднее всего"
+  },
+  "Bidding": {
+    "title": "Торги за поездку #{id}",
+    "status": "Статус: {status}",
+    "startPoint": "Откуда: {from}",
+    "endPoint": "Куда: {to}",
+    "initialPrice": "Начальная цена: {price}",
+    "currentBids": "Текущие ставки",
+    "placeBid": "Сделать ставку",
+    "bidPlaceholder": "Введите сумму в сум",
+    "noBids": "Ставок пока нет. Будьте первым!",
+    "wsDisconnected": "Соединение разорвано. Переподключение...",
+    "wsConnected": "Соединение установлено",
+    "errorMinBid": "Ваша ставка должна быть больше текущей!"
+  },
+  "Trips": {
+    "searchTitle": "Поиск поездок",
+    "searchSubtitle": "Найдите попутчиков по выгодной цене",
+    "from": "Откуда",
+    "to": "Куда",
+    "searchBtn": "Найти",
+    "createTitle": "Создание поездки",
+    "step1": "Маршрут",
+    "step2": "Детали поездки",
+    "step3": "Стоимость",
+    "createBtn": "Опубликовать поездку",
+    "historyTitle": "История поездок"
+  }
+}
